@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tomi Code Construct"
+  short_description: "Build e revisão de estrutura, falhas e segurança"
+  default_prompt: "Use $tomi-code-construct para revisar esta implementação contra a BASE, corrigir falhas em TDD e construir o projeto."

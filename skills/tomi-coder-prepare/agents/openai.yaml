@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tomi Coder Prepare"
+  short_description: "Estrutura e ferramentas com testes primeiro"
+  default_prompt: "Use $tomi-coder-prepare para preparar esta mudança segundo a BASE, com testes antes da implementação."
