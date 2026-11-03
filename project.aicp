@@ -1,0 +1,29 @@
+@aicp v=semver:0.3.0 id=tomi-coder kind=skills summary="Skills de desenvolvimento orientadas pelo estilo de Tomieiro e por TDD"
+@stack lang=set[enum]:[markdown,python] runtime=set[enum]:[python3] infra=set[enum]:[] package=list[path]:[] lock=list[path]:[]
+@agent read=list[atom]:[@aicp,@stack,@mod,@resolver,@inv,@task] verify=bool:true update_on_arch_change=bool:true mode=guided
+@avoid paths=list[glob]:[examples/**,.git/**]
+@mod documentation kind=docs owns=set[id]:[readme,base,evidence] entry=list[path]:[README.md,BASE.md,docs/estilo-e-evidencias.md] evidence=list[path]:[README.md,BASE.md,LICENSE]
+@mod prepare kind=docs owns=set[id]:[skill-prepare] entry=list[path]:[skills/tomi-coder-prepare/SKILL.md] evidence=list[path]:[skills/tomi-coder-prepare/references/builders.md]
+@mod develop kind=docs owns=set[id]:[skill-develop] entry=list[path]:[skills/tomi-coder-develop/SKILL.md] evidence=list[path]:[skills/tomi-coder-develop/references/ponytail.md,skills/tomi-coder-develop/references/PONYTAIL-LICENSE]
+@mod construct kind=docs owns=set[id]:[skill-construct] entry=list[path]:[skills/tomi-code-construct/SKILL.md]
+@mod packaging kind=cli owns=set[id]:[base-sync,checks] entry=list[path]:[scripts/sync_base.py,Makefile] test=list[path]:[tests/test_sync_base.py] evidence=list[path]:[scripts/sync_base.py,Makefile]
+@surface prepare owner=prepare kind=skill visibility=public evidence=list[path]:[skills/tomi-coder-prepare/SKILL.md]
+@surface develop owner=develop kind=skill visibility=public evidence=list[path]:[skills/tomi-coder-develop/SKILL.md]
+@surface construct owner=construct kind=skill visibility=public evidence=list[path]:[skills/tomi-code-construct/SKILL.md]
+@resolver edit-base target=mod.documentation intent=edit go=list[path]:[BASE.md,docs/estilo-e-evidencias.md,README.md] use=list[enum]:[search,tests] verify=list[string]:["make sync-base","make check","git diff --check"]
+@resolver edit-prepare target=mod.prepare intent=edit go=list[path]:[skills/tomi-coder-prepare/SKILL.md,skills/tomi-coder-prepare/references/builders.md] use=list[enum]:[search,tests] verify=list[string]:["make check","git diff --check"]
+@resolver edit-develop target=mod.develop intent=edit go=list[path]:[skills/tomi-coder-develop/SKILL.md,skills/tomi-coder-develop/references/ponytail.md] use=list[enum]:[search,tests] verify=list[string]:["make check","git diff --check"]
+@resolver edit-construct target=mod.construct intent=edit go=list[path]:[skills/tomi-code-construct/SKILL.md] use=list[enum]:[search,tests] verify=list[string]:["make check","git diff --check"]
+@resolver edit-packaging target=mod.packaging intent=edit go=list[path]:[tests/test_sync_base.py,scripts/sync_base.py,Makefile] use=list[enum]:[search,tests] verify=list[string]:["make check"]
+@contract phase-handoff source=list[path]:[BASE.md] summary="Contrato, módulos, ferramentas, comandos, evidência RED/GREEN, limitações e próxima etapa; registro existente ou TOMI-TASK.md quando necessário"
+@flow development steps=list[id]:[prepare,develop,construct] evidence=list[path]:[BASE.md]
+@inv examples-read-only scope=set[id]:[global] rule="Examples são repositórios de referência do usuário; leitura histórica autorizada, sem alterações ou execução dos projetos" evidence=list[path]:[examples]
+@inv base-copies scope=set[id]:[packaging,prepare,develop,construct] rule="BASE.md na raiz é canônica; referências locais são cópias exatas geradas pelo sincronizador" enforce=list[path]:[scripts/sync_base.py,tests/test_sync_base.py]
+@inv tdd scope=set[id]:[prepare,develop,construct] rule="Comportamento novo ou corrigido exige teste anterior e RED observado antes da implementação; caracterização de refatoração pode começar verde" evidence=list[path]:[BASE.md]
+@inv licensing scope=set[id]:[develop] rule="Distribuir a adaptação Ponytail com seu aviso MIT; preservar Apache-2.0 do projeto" evidence=list[path]:[LICENSE,skills/tomi-coder-develop/references/PONYTAIL-LICENSE,README.md]
+@cmd check run="make check" evidence=list[path]:[Makefile,tests/test_sync_base.py]
+@cmd sync-base run="make sync-base" evidence=list[path]:[Makefile,scripts/sync_base.py]
+@artifact base-copies source=BASE.md paths=list[path]:[skills/tomi-coder-prepare/references/BASE.md,skills/tomi-coder-develop/references/BASE.md,skills/tomi-code-construct/references/BASE.md] generated=bool:true
+@risk style-inference level=medium scope=set[id]:[documentation] mitigation="Separar observação histórica de requisito atual; não atribuir contribuições alheias ou inferir TDD dos títulos de commits"
+@note validation-limits text="Checks locais verificam sincronização e CLI; formato de skills também pode ser validado pelo quick_validate.py da skill-creator instalada. Não há validação comportamental automática das instruções por agentes."
+@note examples text="Seis repositórios locais não rastreados pelo pai; não são dependências das skills instaladas."
