@@ -2,9 +2,12 @@
 
 Esta é a referência comum de `tomi-coder-prepare`, `tomi-coder-develop` e
 `tomi-code-construct`. Leia antes de atuar. O estilo foi inferido de arquivos e
-diffs dos seis projetos em `examples`; não é uma descrição infalível da pessoa.
+diffs dos seis projetos originalmente fornecidos em `examples`; não é uma descrição infalível da pessoa.
 O relatório `docs/estilo-e-evidencias.md` do repositório tomi-coder registra as
-evidências. As skills instaladas não precisam dos exemplos para funcionar.
+evidências. Trechos anonimizados, com origem, limites e alterações explícitas,
+estão nas referências de cada skill. O registro `docs/code-provenance.md` conserva
+as revisões e identidades dos arquivos de origem. Os clones foram removidos após
+a extração, por solicitação do usuário; as skills funcionam sem eles.
 
 ## O que vem de onde
 

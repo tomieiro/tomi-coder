@@ -1,9 +1,11 @@
 # De onde veio a BASE
 
-Análise realizada em 2026-11-03 sobre os seis repositórios locais de `examples`.
+Análise realizada em 2026-11-03 sobre os seis repositórios originalmente fornecidos em `examples`.
 Foram lidos arquivos atuais, históricos de todas as refs disponíveis, estatísticas
-de commits selecionados e diffs de sequências de implementação. Nenhum exemplo
-foi modificado ou executado.
+de commits selecionados e diffs de sequências de implementação. Os projetos
+originais não foram modificados ou executados. Posteriormente, trechos foram
+adaptados, anonimizados e testados dentro das skills; os clones foram removidos
+por solicitação do usuário. Veja o [registro de extração](code-provenance.md).
 
 ## Método e limites
 
@@ -23,7 +25,8 @@ posterior; autoria Git não permite determinar se houve auxílio de ferramentas.
 Os projetos coletivos contêm contribuições de outras pessoas.
 
 Os caminhos citados são relativos a cada exemplo, no commit indicado quando
-diferem da árvore atual. Para conferir uma evidência local:
+diferem da árvore consultada. Os comandos abaixo documentam a inspeção original;
+exigem recuperar os respectivos clones para executá-los novamente:
 
 ```sh
 git -C examples/InternetRelayChat show 8bbe39f -- src/lista_clientes.h src/lista_clientes.c src/servidor.c
@@ -85,8 +88,9 @@ fatia permanecem testáveis e as limitações são declaradas.
 
 ## Proveniência e licença
 
-As instruções da BASE são uma síntese original de decisões, não cópia do source
-dos exemplos. Os projetos AdoPet, InternetRelayChat, lesc-evolution, lua_notebook
+As instruções da BASE são uma síntese original de decisões. As referências de
+código acrescentadas depois contêm adaptações identificadas e conservam os avisos
+MIT dos projetos de origem. Os projetos AdoPet, InternetRelayChat, lesc-evolution, lua_notebook
 e std-moon apresentam MIT nas licenças locais. A licença raiz de LicensePicker
 foi movida para um asset em seu histórico; a presença de textos de licenças em
 assets não licencia automaticamente o app. Foi usado apenas para observação.

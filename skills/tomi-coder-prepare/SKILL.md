@@ -8,6 +8,10 @@ description: Preparar projetos e funcionalidades no estilo Tomi, lendo a estrutu
 Leia [a BASE](references/BASE.md). Sua entrega é uma fatia preparada com testes
 RED e estrutura mínima para desenvolvimento. Sempre TDD.
 
+Ao preparar um objeto ou módulo novo, consulte o
+[exemplo de contrato, teste e stub](references/tdd-example.md), adaptado de
+código do autor. Ele mostra como chegar ao RED sem implementar a funcionalidade.
+
 ## Entender antes de estruturar
 
 Localize a raiz, instruções locais, manifesto AICP se houver, estado do Git,

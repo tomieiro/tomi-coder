@@ -4,10 +4,19 @@ Três skills para desenvolver no estilo Tomi: peças concretas do domínio,
 implementação direta, integração incremental e revisão posterior. **Sempre
 TDD: teste antes do comportamento, RED observado, GREEN e refatoração.**
 
-A [BASE](BASE.md) foi construída a partir da leitura dos seis projetos locais
-em `examples` e de seus históricos. O [relatório de evidências](docs/estilo-e-evidencias.md)
+A [BASE](BASE.md) foi construída a partir da leitura dos seis projetos originalmente
+fornecidos em `examples` e de seus históricos. O [relatório de evidências](docs/estilo-e-evidencias.md)
 relaciona commits, observações e limites da interpretação. O histórico não prova
 TDD sistemático: essa é uma exigência atual incorporada às skills.
+
+Os clones foram removidos por solicitação do usuário após a extração. As skills
+preservam [exemplos anonimizados](skills/tomi-coder-develop/references/code-examples.md)
+de estado, operações, reuso, lógica, callbacks e navegação, além de um
+[exemplo de preparação em TDD](skills/tomi-coder-prepare/references/tdd-example.md)
+e uma [revisão antes/depois](skills/tomi-code-construct/references/review-example.md).
+O [registro de proveniência](docs/code-provenance.md) identifica arquivos, commits,
+autoria por linha e alterações deliberadas. Os nomes do domínio são neutros;
+os avisos de autoria e licença continuam preservados.
 
 ## As três etapas
 
@@ -69,6 +78,13 @@ verifica e retorna código 1 se encontrar cópia ausente ou diferente. Os testes
 usam diretórios temporários e verificam cópia exata, detecção sem escrita,
 ausência da fonte e os códigos de saída da CLI.
 
+A suíte também extrai os trechos diretamente do Markdown e verifica seu
+comportamento com Lua, GCC, G++ e JDK (`javac`/`java`). São oito verificações de
+exemplos, incluindo RED → GREEN do exemplo de preparação, além dos quatro
+testes do sincronizador. Ferramentas ausentes geram testes explicitamente
+ignorados; uma validação completa exige as ferramentas e nenhum teste ignorado.
+Os builds e execuções usam diretórios temporários e dispensam os clones originais.
+
 Se a skill `skill-creator` estiver disponível, execute também seu
 `scripts/quick_validate.py` para cada uma das três pastas. Esse validador confere
 o formato de skill, não a qualidade de decisões futuras do agente.
@@ -87,7 +103,8 @@ Para revisar mudanças nas instruções, percorra estes cenários:
 | Novo módulo versus mudança local | BASE na decomposição; economia do Ponytail na alteração, preservando TDD. |
 
 Esses cenários são critérios de revisão das instruções, não uma alegação de
-execução por agentes em todos esses ambientes. Os exemplos foram apenas lidos.
+execução por agentes em todos esses ambientes. Os projetos originais foram
+apenas lidos; seus trechos adaptados possuem testes executáveis.
 Não há deploy, commit, push ou instalação global implícitos no fluxo.
 
 ## Derivação e licenças
@@ -108,6 +125,12 @@ também para comportamentos pequenos e preserva a decomposição da BASE; não
 herda modos que possam cortar requisitos explícitos. Não é preciso instalar
 o Ponytail original nem baixar seu repositório para usar estas skills.
 
-A BASE e as demais instruções foram redigidas originalmente a partir de
-observações dos projetos, sem copiar seu source. `examples/` mantém as licenças
-e autorias próprias; sua presença local não muda a licença desses projetos.
+A BASE foi redigida originalmente a partir de observações dos projetos. As novas
+referências de código são derivações MIT de trechos selecionados, com atribuição
+e mudanças documentadas. Cada skill leva seu `references/EXAMPLES-LICENSE`:
+[prepare](skills/tomi-coder-prepare/references/EXAMPLES-LICENSE),
+[develop](skills/tomi-coder-develop/references/EXAMPLES-LICENSE) e
+[construct](skills/tomi-code-construct/references/EXAMPLES-LICENSE).
+Preserve esses avisos ao redistribuir os trechos. A licença Apache-2.0 do restante
+do projeto não substitui os avisos MIT. Nenhum source de LicensePicker foi
+reutilizado, pois a licença do app não foi estabelecida.

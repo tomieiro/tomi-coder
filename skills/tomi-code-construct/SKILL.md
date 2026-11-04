@@ -9,6 +9,11 @@ Leia [a BASE](references/BASE.md). Construa o projeto e confronte implementaçã
 testes e artefatos com seu contrato. Esta etapa aprofunda correção e segurança
 preservando as decisões de domínio, sem reescrever por preferência estética.
 
+Para uma correção localizada, consulte o
+[exemplo de revisão antes/depois](references/review-example.md): regressão,
+guarda na fronteira correta e preservação do algoritmo. O defeito histórico é
+identificado como tal, não como implementação a reproduzir.
+
 ## Recuperar e revisar
 
 Leia instruções/contexto arquitetural local, estado do Git e passagem anterior.

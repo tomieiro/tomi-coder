@@ -9,6 +9,12 @@ Leia [a BASE](references/BASE.md). Para alterações em código existente, leia
 também [a adaptação do Ponytail](references/ponytail.md). Novas capacidades seguem
 a decomposição da BASE; mudanças locais seguem a menor alteração completa.
 
+Para abrir arquivos ou criar funcionalidades, consulte os
+[exemplos de código anonimizados](references/code-examples.md): estado e operações,
+reuso, busca e atualização, construção de valores, callbacks e navegação. Leia
+somente os exemplos pertinentes; preserve a lógica de organização, não copie
+tipos ou estruturas desnecessários. Cada trecho distingue origem e adaptação.
+
 ## Recuperar a fatia
 
 Leia instruções/contexto arquitetural local, alterações pendentes e a passagem
