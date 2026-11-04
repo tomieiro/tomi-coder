@@ -1,61 +1,28 @@
 ---
 name: tomi-coder-develop
-description: Implementar e alterar código no estilo Tomi usando a estrutura preparada e o ciclo TDD. Use para criar funcionalidades, editar sources e scripts, corrigir bugs ou refatorar, combinando a BASE com mudanças mínimas inspiradas no Ponytail.
+description: Implement and change code in the Tomi style using prepared structure and TDD. Use for new features, source and script edits, bug fixes, or refactoring with BASE and minimal Ponytail-inspired changes.
 ---
 
 # Tomi Coder Develop
 
-Leia [a BASE](references/BASE.md). Para alterações em código existente, leia
-também [a adaptação do Ponytail](references/ponytail.md). Novas capacidades seguem
-a decomposição da BASE; mudanças locais seguem a menor alteração completa.
+Read [BASE](references/BASE.md). For existing code, also read the [Ponytail adaptation](references/ponytail.md). New capabilities follow BASE's concrete decomposition; local edits use the smallest complete change. Consult only relevant [anonymized code examples](references/code-examples.md) for state, reuse, search, value construction, callbacks, or navigation. Preserve the reasoning, not unnecessary types or files.
 
-Para abrir arquivos ou criar funcionalidades, consulte os
-[exemplos de código anonimizados](references/code-examples.md): estado e operações,
-reuso, busca e atualização, construção de valores, callbacks e navegação. Leia
-somente os exemplos pertinentes; preserve a lógica de organização, não copie
-tipos ou estruturas desnecessários. Cada trecho distingue origem e adaptação.
+## Recover the slice
 
-## Recuperar a fatia
+Read local instructions and architecture context, pending changes, and the prepare handoff if available. Open tests, affected files, and consumers. Trace input, data, operation, and output before editing. Verify the current state instead of relying solely on an earlier report.
 
-Leia instruções/contexto arquitetural local, alterações pendentes e a passagem
-do prepare, quando existir. Abra os testes, os arquivos que serão alterados e
-os consumidores relevantes. Trace entrada, dados, operação e saída antes de
-decidir onde editar. Verifique o estado real em vez de confiar no relato anterior.
+Without preparation, perform the minimal BASE preparation: contract, tools, test written first, and demonstrated RED. Do not require another skill invocation. A currently green test does not prove RED; determine whether behavior already exists, the test is nondiscriminating, or the work advanced since handoff.
 
-Sem preparação, faça a preparação mínima da BASE: contrato, ferramentas,
-teste anterior e RED comprovado. Não espere que o usuário invoque outra skill.
-Um teste já verde não comprova RED: descubra se a capacidade já existe, se o
-teste não discrimina a mudança ou se o estado avançou desde a passagem.
+## Implement
 
-## Programar
+1. Pick a verifiable slice. Write and run the test before new behavior. Reproduce a bug before fixing it; characterize preserved behavior before a refactor.
+2. Implement within the prepared BASE structure. Keep data and operations with their responsibilities; connect them through the entry point. Add a file only for a concrete responsibility.
+3. For existing code, find the cause and callers. Reuse local solutions, the standard library, and installed dependencies. Update affected consumers, fixtures, and exports when a signature changes. Fix a shared cause once when that is the right boundary.
+4. Run the slice test to GREEN and the affected regression checks. Investigate failures without weakening assertions. Change the contract only when the request warrants it.
+5. Refactor only where it helps a real next change, keeping tests green. Repeat for all authorized slices without rewriting adjacent files for visual uniformity.
 
-1. Escolha uma fatia verificável. Para novo comportamento, escreva/complete e
-   execute o teste antes do source funcional. Para bug, reproduza a falha; para
-   refatoração, caracterize o comportamento que deve permanecer.
-2. Implemente na estrutura BASE preparada. Dados e operações ficam junto de
-   suas responsabilidades; entrada e coordenação conectam as peças. Abra um
-   arquivo novo quando houver uma responsabilidade concreta que o justifique.
-3. Para edição existente, encontre a causa e seus chamadores. Reuse soluções
-   locais, biblioteca padrão e dependências existentes antes de adicionar algo.
-   Uma assinatura alterada exige atualizar consumidores, fixtures e exports
-   afetados; uma correção em um único chamador pode deixar a causa intacta.
-4. Execute o teste da fatia até GREEN e a regressão afetada. Investigue falhas
-   sem apagar asserções. Ajuste o contrato apenas quando o pedido justificar.
-5. Refatore o que facilita a próxima mudança real, mantendo os testes verdes.
-   Não reescreva arquivos adjacentes para uniformizar estética. Repita o ciclo
-   para as próximas fatias do escopo autorizado até concluir a implementação.
+Initial code may be direct and lightly polished. Never add deliberate bugs, duplication, or poor names to look human. Correct known contract failures and concrete vulnerabilities when found. Record acceptable limits for deeper review.
 
-Código inicial pode ser direto e pouco polido. Não adicione bugs, duplicação
-deliberada ou nomes ruins para parecer humano. Não deixe uma quebra conhecida
-de contrato ou vulnerabilidade concreta para o construct consertar. Registre
-limitações aceitáveis e pontos que merecem revisão mais profunda.
+## Handoff
 
-## Entrega
-
-Informe comportamento implementado, arquivos/responsabilidades afetados,
-evidência RED → GREEN, regressões executadas e limites. Atualize o registro de
-passagem da BASE, sem inventar resultados. Se houver bloqueio, identifique o
-que está incompleto; código escrito não equivale a comportamento validado.
-
-Quando o pedido abrange o ciclo completo, avance para construção e revisão.
-Não publique, faça commit ou faça push como efeito implícito de programar.
+Report implemented behavior, affected responsibilities, observed RED → GREEN, regression results, and limits. Update the BASE handoff. A blocked or unverified implementation is not complete. Continue to construction when the request covers the full cycle. Do not commit, push, or publish implicitly.

@@ -1,4 +1,4 @@
-"""Sincronizar a BASE comum nas três skills instaláveis."""
+"""Synchronize the shared BASE across three installable skills."""
 
 import argparse
 from pathlib import Path
@@ -21,14 +21,14 @@ def sync_base(root, write=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--write", action="store_true", help="atualizar as cópias")
+    parser.add_argument("--write", action="store_true", help="update the copies")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     changed = sync_base(root, write=args.write)
     for path in changed:
-        print(f"{'Atualizada' if args.write else 'Divergente/ausente'}: {path.relative_to(root)}")
+        print(f"{'Updated' if args.write else 'Different/missing'}: {path.relative_to(root)}")
     if not changed:
-        print("BASE sincronizada nas três skills.")
+        print("BASE synchronized across the three skills.")
     return 0 if args.write or not changed else 1
 
 

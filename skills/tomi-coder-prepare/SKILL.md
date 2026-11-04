@@ -1,63 +1,32 @@
 ---
 name: tomi-coder-prepare
-description: Preparar projetos e funcionalidades no estilo Tomi, lendo a estrutura existente, escolhendo ferramentas e criando testes antes da implementação. Use para iniciar apps, scripts, módulos ou preparar uma mudança em TDD.
+description: Prepare a project or feature in the Tomi style by reading existing structure, choosing tools, and writing tests before implementation. Use to start apps, scripts, modules, or TDD changes.
 ---
 
 # Tomi Coder Prepare
 
-Leia [a BASE](references/BASE.md). Sua entrega é uma fatia preparada com testes
-RED e estrutura mínima para desenvolvimento. Sempre TDD.
+Read [BASE](references/BASE.md). Deliver a prepared slice with behavioral RED and the minimum structure needed for development. Always use TDD. For a new module, consult the [contract, test, and stub example](references/tdd-example.md).
 
-Ao preparar um objeto ou módulo novo, consulte o
-[exemplo de contrato, teste e stub](references/tdd-example.md), adaptado de
-código do autor. Ele mostra como chegar ao RED sem implementar a funcionalidade.
+## Understand before structuring
 
-## Entender antes de estruturar
+Find the repository root, local instructions, AICP if present, Git status, relevant README, manifests, locks, tests, and CI. Preserve local changes and verify architecture claims in source. In an empty project, derive the first slice from the request; in an existing one, find its owner and consumers.
 
-Localize a raiz, instruções locais, manifesto AICP se houver, estado do Git,
-README, manifests, lockfiles, testes e CI relevantes. Preserve mudanças locais.
-Confira a arquitetura no código. Em projeto vazio, derive a primeira fatia do
-pedido; em projeto existente, encontre o módulo dono e seus consumidores.
+Define observable behavior, state, and input/output boundaries. Ask only what blocks that definition; decide reversible details from evidence and record assumptions. Do not create a generic folder tree before understanding the feature.
 
-Defina o comportamento observável, o estado envolvido e as fronteiras de entrada
-e saída. Pergunte apenas o que realmente bloqueia essa definição; escolha
-detalhes reversíveis por evidência e registre a suposição. Não monte uma árvore
-genérica antes de compreender a funcionalidade.
+## Choose tools automatically
 
-## Escolher ferramentas automaticamente
+Read [tool selection](references/builders.md) when choosing or repairing the environment, runner, or build. Keep what already works. Distinguish environment management, dependency management, task execution, and compilation. Check executables, versions, manifests, and commands. A tool named in a README may not exist locally. Do not invent commands for `riema` or another unidentified tool.
 
-Leia [a seleção de ferramentas](references/builders.md) quando precisar escolher
-ou reparar ambiente, runner ou build. Preserve o que já funciona. Diferencie
-gerenciador de ambiente, dependências, executor de tarefas e compilador/build.
-Verifique executável, versão, manifesto e comandos; presença de um nome no
-README não garante que o comando exista. Não invente comandos para `riema` ou
-outra ferramenta não identificada.
+## Prepare with TDD
 
-## Preparar em TDD
+1. Run the smallest relevant existing checks, if any, and distinguish preexisting failures.
+2. Write the first slice's test before functional source: success and contract-relevant errors. Use the existing runner or a minimal appropriate mechanism.
+3. Add only the bootstrap required to execute it. After writing the test, add logic-free stubs or signatures if needed. Create directories only for an actual test, domain, entry point, resource, or generated output.
+4. Run the test and confirm behavioral RED as defined in BASE. An environment failure does not count.
+5. Declare test/build commands and dependencies through the selected mechanism. Generate wrappers and locks with their tools; do not invent versions or hashes. If the environment blocks RED, report preparation as blocked.
 
-1. Se houver testes existentes, rode a menor base relevante e separe falhas
-   anteriores da mudança. Não corrija problemas alheios silenciosamente.
-2. Escreva primeiro o teste da primeira fatia: sucesso e os erros que fazem
-   parte do contrato. Use o runner existente ou o mecanismo mínimo adequado.
-3. Prepare só o bootstrap que permite executar esse teste. Depois do teste,
-   adicione stubs/assinaturas sem comportamento se necessários. Crie pastas
-   quando tiverem função nessa fatia: teste, domínio, entrada, recurso ou saída
-   gerada. Não copie a árvore de um exemplo indiscriminadamente.
-4. Execute e confirme RED pelo comportamento ausente, seguindo a distinção
-   entre falha comportamental e falha de ambiente descrita na BASE.
-5. Deixe os comandos de teste/build e as dependências declarados no mecanismo
-   escolhido. Gere wrappers/lockfiles com suas ferramentas; não invente hashes
-   nem versões. Se o ambiente impedir o RED, entregue a preparação como bloqueada.
+Do not implement functional logic in this stage to make tests pass. Prepare one verifiable slice at a time. Tests must express the contract, not an internal solution or artificially narrow sample.
 
-Não implemente lógica funcional nesta etapa para fazer o teste passar. Não
-precisa escrever todos os testes de um app futuro: prepare uma fatia verificável
-e repita o ciclo conforme o escopo avançar. Um teste não deve codificar a solução
-interna nem limitar artificialmente o requisito.
+## Handoff
 
-## Entrega
-
-Registre a passagem definida na BASE: contrato, responsabilidades, arquivos,
-ferramentas e motivo, comandos reais, RED observado e limitações. Se só foi
-pedida preparação, encerre declarando os testes intencionalmente vermelhos.
-Se o pedido inclui desenvolver/construir, continue para a próxima etapa sem
-pedir nova confirmação de rotina.
+Record the BASE handoff: contract, responsibilities, files, tool choice and evidence, real commands, observed RED, and limits. If only preparation was requested, report intentionally red tests. If development or construction is also requested, continue without routine confirmation.

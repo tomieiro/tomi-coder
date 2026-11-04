@@ -1,50 +1,30 @@
-# Ponytail adaptado ao fluxo Tomi
+# Ponytail adapted to the Tomi workflow
 
-Derivação de [Ponytail, por DietrichGebert](https://github.com/DietrichGebert/ponytail),
-arquivo `skills/ponytail/SKILL.md`, revisão
-`96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`.
-Copyright (c) 2026 DietrichGebert. Origem sob MIT; o aviso original acompanha
-esta adaptação em [PONYTAIL-LICENSE](PONYTAIL-LICENSE).
+Derived from [Ponytail by DietrichGebert](https://github.com/DietrichGebert/ponytail), `skills/ponytail/SKILL.md`, revision `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`. Copyright (c) 2026 DietrichGebert. The original MIT notice accompanies this adaptation in [PONYTAIL-LICENSE](PONYTAIL-LICENSE).
 
-Esta adaptação se aplica ao trabalho desta skill, sem ativação persistente em
-outras tarefas. Não exige instalar o Ponytail original. BASE, TDD obrigatório e
-o pedido do usuário delimitam a simplificação.
+This adaptation applies to work under this skill only. It does not activate persistently or require installation of the original Ponytail. BASE, mandatory TDD, and the user's request bound simplification.
 
-## Antes de reduzir a solução
+## Before simplifying
 
-Entenda o fluxo real, os chamadores, os contratos e os efeitos da mudança.
-Economizar leitura pode produzir uma alteração pequena no lugar errado.
+Understand the actual flow, callers, contracts, and effects. Skipping that reading can put a small change in the wrong place.
 
-Escolha a primeira solução que cubra completamente a necessidade:
+Choose the first solution that fully covers the need:
 
-1. Remova do plano somente o que foi imaginado para um futuro não solicitado.
-2. Reuse uma operação, componente ou convenção já existente no projeto.
-3. Use biblioteca padrão ou recurso nativo compatível com a estrutura local.
-4. Reuse uma dependência instalada que resolva o problema.
-5. Escreva a menor implementação legível que cumpra o contrato restante.
+1. Drop only speculative future features.
+2. Reuse an existing operation, component, or convention.
+3. Use the standard library or a suitable native platform feature.
+4. Reuse an installed dependency that solves the problem.
+5. Write the smallest readable implementation satisfying the remaining contract.
 
-Não acrescente interfaces sem necessidade, wrappers vazios, configurações sem
-uso nem camadas cujo único propósito seja parecer arquitetura. Preserve as
-fronteiras úteis existentes. Poucos arquivos não justificam misturar UI,
-persistência e regras num módulo impossível de testar.
+Avoid unnecessary interfaces, empty wrappers, unused configuration, and architectural layers without a concrete job. Preserve useful existing boundaries. A low file count does not justify mixing UI, persistence, and rules into an untestable module.
 
-Para bugs, corrija a causa no ponto compartilhado quando ele for o responsável.
-Verifique os consumidores e ajuste o que a mudança afetar. Código movido mantém
-tratamento de erros e validação. Uma linha críptica não é uma simplificação.
+For bugs, correct the shared root cause where it belongs. Check consumers and update affected code. Moved code retains validation and error handling. A cryptic one-liner is not a simplification. Document a deliberate limit only when it matters, naming the limit and the condition for changing it.
 
-Anote um limite deliberado somente quando ele for relevante: qual é o limite e
-qual condição concreta exigiria mudá-lo. Não invente cenários para justificar
-infraestrutura antecipada.
+## Deliberate differences from the source
 
-## Diferenças deliberadas em relação à origem
+- TDD applies even to small behavioral changes; the original exemption for trivial changes is not used.
+- BASE guides decomposition of new capabilities; file count alone does not.
+- No mode may remove an explicit requirement in the name of YAGNI.
+- Replies include evidence and limits needed to review the work.
 
-- TDD é obrigatório mesmo em comportamento pequeno; não herdamos a dispensa
-  de testes para mudanças triviais do Ponytail.
-- A decomposição de novas funcionalidades vem da BASE, não de minimizar o
-  número de arquivos isoladamente.
-- Não há modo que elimine um requisito explícito em nome de YAGNI.
-- O fluxo não impõe respostas telegráficas; relate a evidência e as limitações
-  necessárias para revisar o trabalho.
-
-Nunca remova proteção de dados, controles de acesso, validação nas fronteiras,
-tratamento de falhas ou requisitos explícitos para encurtar o diff.
+Never remove data protection, access controls, boundary validation, failure handling, or explicit requirements to shorten a diff.

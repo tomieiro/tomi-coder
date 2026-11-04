@@ -1,4 +1,4 @@
-"""Contratos de sincronização: detectar deriva sem escrever e copiar a BASE."""
+"""Synchronization contracts: detect drift without writing and copy BASE."""
 
 import tempfile
 import unittest
@@ -13,7 +13,7 @@ class SyncBaseTests(unittest.TestCase):
         self.workspace = tempfile.TemporaryDirectory()
         self.addCleanup(self.workspace.cleanup)
         self.root = Path(self.workspace.name)
-        (self.root / "BASE.md").write_text("BASE de teste\n", encoding="utf-8")
+        (self.root / "BASE.md").write_text("test BASE\n", encoding="utf-8")
         for skill in SKILLS:
             (self.root / "skills" / skill).mkdir(parents=True)
 
@@ -27,9 +27,9 @@ class SyncBaseTests(unittest.TestCase):
             target = self.root / "skills" / skill / "references" / "BASE.md"
             self.assertEqual(target.read_bytes(), (self.root / "BASE.md").read_bytes())
         self.assertEqual(sync_base(self.root), [])
-        target.write_text("alteração local\n", encoding="utf-8")
+        target.write_text("local change\n", encoding="utf-8")
         self.assertEqual(sync_base(self.root), [target])
-        self.assertEqual(target.read_text(encoding="utf-8"), "alteração local\n")
+        self.assertEqual(target.read_text(encoding="utf-8"), "local change\n")
         sync_base(self.root, write=True)
         self.assertEqual(sync_base(self.root), [])
 

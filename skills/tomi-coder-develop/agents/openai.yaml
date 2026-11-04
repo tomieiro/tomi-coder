@@ -1,4 +1,4 @@
 interface:
   display_name: "Tomi Coder Develop"
-  short_description: "Implementação modular no estilo Tomi em TDD"
-  default_prompt: "Use $tomi-coder-develop para implementar esta funcionalidade pela BASE e confirmar o ciclo RED e GREEN."
+  short_description: "Modular implementation in the Tomi style with TDD"
+  default_prompt: "Use $tomi-coder-develop to implement this feature under BASE and confirm RED and GREEN."

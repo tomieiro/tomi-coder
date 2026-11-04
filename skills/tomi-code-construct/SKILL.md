@@ -1,87 +1,36 @@
 ---
 name: tomi-code-construct
-description: Construir, testar e revisar implementações segundo a BASE Tomi. Use após desenvolvimento ou para validar mudanças, compilar ou empacotar o projeto, revisar simplicidade e modularidade, detectar falhas e corrigir vulnerabilidades em TDD.
+description: Build, test, and review implementations against the Tomi BASE. Use after development or to inspect changes, compile or package a project, find defects, and correct vulnerabilities through TDD.
 ---
 
 # Tomi Code Construct
 
-Leia [a BASE](references/BASE.md). Construa o projeto e confronte implementação,
-testes e artefatos com seu contrato. Esta etapa aprofunda correção e segurança
-preservando as decisões de domínio, sem reescrever por preferência estética.
+Read [BASE](references/BASE.md). Build and compare the implementation, tests, and artifacts to the contract. Deepen correctness and security review while preserving useful domain boundaries. For a local fix, consult the [before-and-after review example](references/review-example.md), which identifies the historical defect explicitly.
 
-Para uma correção localizada, consulte o
-[exemplo de revisão antes/depois](references/review-example.md): regressão,
-guarda na fronteira correta e preservação do algoritmo. O defeito histórico é
-identificado como tal, não como implementação a reproduzir.
+## Recover and review
 
-## Recuperar e revisar
+Read local instructions and architecture context, Git status, and any handoff. Compare the diff with relevant full files, consumers, and tests, including untracked additions. Check TDD evidence. If absent, state the gap; a test run now cannot prove that earlier development used TDD.
 
-Leia instruções/contexto arquitetural local, estado do Git e passagem anterior.
-Compare o diff com os arquivos completos relevantes, consumidores e testes;
-inclua arquivos novos não rastreados. Verifique as evidências de TDD. Se faltarem,
-declare a lacuna: testar agora não prova que o desenvolvimento anterior foi TDD.
+Confirm requested behavior and apply the BASE review criteria. File size alone is not a defect. Look for mixed responsibilities, unowned state, duplicated rules, and abstractions with no concrete purpose.
 
-Confirme se a implementação satisfaz o comportamento pedido e aplique os
-critérios de aderência à BASE. Uma função grande ou um arquivo adicional não
-constituem defeito isoladamente; procure mistura de responsabilidades, estado
-sem dono, duplicação de regra e abstrações sem função concreta.
+## Find and correct defects
 
-## Detectar e corrigir falhas
+Trace changed paths and boundaries. Depending on the project, examine invalid input, nulls, bounds, error contracts, resource ownership, concurrency, cancellation, authorization, data isolation, secrets, queries, shell execution, paths, serialization, partial writes, transactions, migrations, dependencies, and compatibility.
 
-Siga os caminhos alterados e suas fronteiras. Conforme o projeto, examine:
+For each real finding, record its location, trigger, impact, and evidence. Distinguish confirmed issues from suspicions. Rank a concrete integrity, security, or central contract failure as blocking; a secondary failure as relevant; style-only improvements as optional. A scanner does not prove the absence of vulnerabilities.
 
-- entradas inválidas, nulos, limites e contratos de erro;
-- propriedade de memória/recursos, fechamento, concorrência e cancelamento;
-- autorização e isolamento de dados, segredos em código/logs e permissões;
-- consultas, shell, caminhos, serialização e execução de conteúdo externo;
-- gravações parciais, transações, migrações e recuperação após falha;
-- dependências alteradas, compatibilidade e avisos de segurança verificáveis.
+Correct findings within the authorized scope. For behavioral changes, add a failing regression, observe RED, correct, and confirm GREEN. For structural changes, characterize behavior before and after. Repeat as needed without weakening tests. If the request is review only, report findings and proposed fixes without editing. If a correction needs a conflicting product decision or unavailable access, record the blocker and continue independent checks.
 
-Para cada achado real, registre arquivo/local, condição que o dispara, impacto
-e evidência. Diferencie confirmado de suspeita. Classifique pelo impacto:
-bloqueante (integridade/segurança ou contrato central), relevante (falha concreta
-secundária), ou melhoria opcional. Não transforme uma hipótese em vulnerabilidade
-confirmada nem diga que um scanner prova ausência de vulnerabilidades.
+## Build and verify
 
-Corrija os achados dentro do escopo autorizado. Para mudança de comportamento,
-crie a regressão, observe RED, corrija e confirme GREEN. Para ajuste estrutural,
-garanta caracterização antes e depois. Se a revisão descobrir outra falha,
-repita o ciclo necessário. Não afrouxe testes para liberar o build.
+1. Read recipes and scripts before running them. Use the project's real toolchain; derive missing commands from evidence rather than guessing targets.
+2. Run affected and relevant regression tests, static checks, and required project gates. Use applicable scanners already available and report their coverage and limits.
+3. Produce the requested local artifact with the actual build or packaging tool. Change generation sources rather than hand-editing generated output. Keep build separate from execution, installation, and publishing.
+4. Inspect the produced artifact's path and format and run an appropriate isolated smoke check. For interpreted scripts, use execution or import checks rather than inventing compilation. Report unavailable GUI, device, or service checks.
+5. After corrections, rerun affected checks and rebuild invalidated artifacts. Review the final diff and update documentation and architecture context for changed contracts or commands.
 
-Se o pedido for apenas revisão, relate achados e correções propostas sem editar.
-Se a correção depender de decisão incompatível com o contrato, ação destrutiva
-ou acesso indisponível, registre o bloqueio e continue verificações independentes.
+Avoid broad cleanup or real services and data for convenience. Do not deploy, publish, commit, or push without explicit authorization.
 
-## Construir e verificar o resultado
+## Handoff
 
-1. Leia as receitas/scripts antes de executar. Use a cadeia escolhida no
-   projeto; reconstitua comandos ausentes por evidência, sem inventar targets.
-2. Execute testes afetados e regressões relevantes, análise estática e checks
-   exigidos pelo projeto. Use scanners já disponíveis e aplicáveis; registre
-   indisponibilidade, cobertura e limitações dos resultados.
-3. Gere o artefato local solicitado com o build/empacotamento real. Não modifique
-   arquivos gerados manualmente quando houver fonte ou gerador apropriado.
-   Separe build de execução, instalação e publicação.
-4. Confira o artefato produzido, caminho e formato, e faça um smoke test
-   apropriado em ambiente isolado. Scripts sem compilação exigem teste de
-   execução ou carga; não invente um build. Se GUI, dispositivo ou serviço
-   impedir o smoke, registre que ele ficou sem verificação.
-5. Após uma correção, refaça as verificações afetadas e reconstrua artefatos
-   invalidados. Revise o diff final e atualize documentação/contexto arquitetural
-   quando a mudança alterar seus contratos ou comandos.
-
-Não execute limpeza ampla nem use serviços/dados reais para smoke tests por
-conveniência. Não publique, faça deploy, commit ou push sem pedido explícito.
-
-## Entrega
-
-Informe comportamento/artefato produzido, aderência à BASE, correções feitas,
-comandos e resultados, achados restantes e limitações. Separe claramente:
-
-- **Concluído no escopo verificado:** checks relevantes passaram, artefato foi
-  conferido e não restou achado bloqueante conhecido nesse escopo.
-- **Parcial ou bloqueado:** build/teste/smoke necessário não foi executado ou
-  falhou, ou resta problema que impede concluir o contrato.
-
-Ausência de evidência não significa aprovação. Compilar com sucesso não prova
-correção funcional ou segurança; informe o que foi efetivamente verificado.
+Report behavior and artifact, BASE alignment, corrections, commands and results, remaining findings, and limits. Mark completion only for the verified scope when relevant checks pass, the artifact is inspected, and no known blocking issue remains. Otherwise report partial or blocked status. Compilation alone does not establish functional correctness or security.

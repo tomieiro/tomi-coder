@@ -1,183 +1,98 @@
-# BASE — desenvolver do jeito Tomi
+# BASE — developing the Tomi way
 
-Esta é a referência comum de `tomi-coder-prepare`, `tomi-coder-develop` e
-`tomi-code-construct`. Leia antes de atuar. O estilo foi inferido de arquivos e
-diffs dos seis projetos originalmente fornecidos em `examples`; não é uma descrição infalível da pessoa.
-O relatório `docs/estilo-e-evidencias.md` do repositório tomi-coder registra as
-evidências. Trechos anonimizados, com origem, limites e alterações explícitas,
-estão nas referências de cada skill. O registro `docs/code-provenance.md` conserva
-as revisões e identidades dos arquivos de origem. Os clones foram removidos após
-a extração, por solicitação do usuário; as skills funcionam sem eles.
+This is the shared reference for `tomi-coder-prepare`, `tomi-coder-develop`, and `tomi-code-construct`. Read it before working. The style was inferred from files and commit diffs in six example projects supplied earlier. It is an operational interpretation, not an infallible account of the author. The repository report `docs/style-and-evidence.md` records the observations; the provenance record `docs/code-provenance.md` identifies the adapted code. Each skill carries its own copy of this reference and works without the original clones.
 
-## O que vem de onde
+## Requirements and evidence
 
-- **Pedido atual:** sempre TDD; preparação, implementação e construção/revisão
-  em três etapas; BASE para novas funcionalidades; simplificação inspirada no
-  Ponytail para alterações; revisão estrutural e de segurança na terceira etapa.
-- **Inferência histórica:** pensar em peças concretas, implementar operações
-  diretamente, ligar as peças e revisar conforme o comportamento aparece.
-- **Limite da inferência:** autoria de commits não prova autoria exclusiva de
-  cada linha ou ausência de ferramentas. Projetos coletivos e mudanças de 2026
-  não devem ser confundidos com uma assinatura pessoal invariável. O histórico
-  consultado não comprova TDD sistemático.
+- **Current request:** always use TDD; prepare, develop, then construct and review; use this BASE for new capabilities and Ponytail-inspired restraint for local changes.
+- **Historical inference:** identify concrete parts, implement direct operations, connect the flow, and revise it as behavior becomes observable.
+- **Limit:** commit authorship does not prove exclusive authorship of a file or systematic TDD. Collaborative projects and later edits do not define an immutable personal style.
 
-## Como escolher a forma do código
+## Shape the code around the problem
 
-1. **Comece pelo problema visível.** Identifique o que entra, o que muda e o que
-   sai. Nomeie as peças pelos conceitos reais: canal, cliente, população, tela,
-   execução, relatório. Evite partir de um catálogo de camadas e padrões.
-2. **Dê um lugar para cada responsabilidade que já existe.** Um módulo pode
-   guardar uma entidade e suas operações; outro coordena a interação com ela.
-   Um script pequeno pode ficar em um arquivo. Uma responsabilidade não precisa
-   virar serviço, interface e implementação só para parecer modular.
-3. **Mantenha os dados compreensíveis.** Campos, parâmetros, coleções e mudanças
-   de estado devem ser rastreáveis. Explique quem possui e altera cada recurso.
-   Não transforme isso em obrigação de usar estado global, ponteiros ou classes.
-4. **Escreva operações concretas.** Funções e métodos expressam ações do domínio.
-   Um fluxo curto, com sequência e condições explícitas, é preferível a mecanismos
-   genéricos que escondam o trabalho. Use os recursos idiomáticos da linguagem.
-5. **Conecte uma fatia utilizável.** Percorra entrada → operação → saída. A GUI,
-   CLI, rota ou `main` coordena o fluxo; extraia a regra que precisa ser testada
-   sem depender de uma janela, rede ou banco real. Uma extração pequena basta.
-6. **Evolua pela próxima necessidade observável.** Faça uma fatia, execute,
-   corrija e então avance. Pode haver trabalho intermediário incompleto, desde
-   que o estado esteja declarado e o comportamento entregue seja verificável.
-7. **Mude a representação quando a atual atrapalhar.** Uma coleção, assinatura
-   ou divisão de arquivos pode mudar por uma razão concreta. Proteja o contrato
-   com testes e ajuste os consumidores no mesmo trabalho. Não reestruture todo
-   o repositório para encaixar uma funcionalidade pequena.
-8. **Separe parâmetros de decisão de infraestrutura inventada.** Use constantes
-   nomeadas ou a configuração já existente para valores que precisam ser
-   entendidos ou ajustados. Não crie um sistema de configuração especulativo.
-9. **Escreva para quem continuará o projeto.** Preserve idioma e convenções
-   locais. Use nomes do domínio e comentários sobre intenção, limites e contratos.
-   Não simule o estilo com erros de digitação, gírias obrigatórias, comentários
-   redundantes ou mensagens de commit vagas.
+1. **Start with observable behavior.** Identify inputs, state changes, and outputs. Name parts after domain concepts such as channel, client, population, screen, or report. Do not start with a catalog of architectural layers.
+2. **Give each real responsibility a home.** A module may hold an entity and its operations; another coordinates interaction. A small script can remain one file. One responsibility does not automatically need a service, interface, and implementation.
+3. **Make state traceable.** Show which fields, arguments, and collections change, and who owns resources. This does not mandate globals, pointers, or classes.
+4. **Write concrete operations.** Use domain verbs and direct control flow. Prefer idiomatic language features over generic machinery that obscures a short sequence.
+5. **Connect a usable slice.** Follow input → operation → output. A GUI, CLI, route, or `main` coordinates the flow; extract only the rule that needs testing without a live window, network, or database.
+6. **Advance from observed needs.** Finish one slice, run it, correct it, then continue. Intermediate work may be incomplete if its status and limits are explicit.
+7. **Change representations for a concrete reason.** When a collection, signature, or file boundary changes, protect the contract with tests and update affected consumers. A small feature does not justify a repository-wide redesign.
+8. **Keep important parameters visible.** Use named constants or existing configuration for values that require understanding or tuning. Do not invent a configuration system for hypothetical needs.
+9. **Write for the next maintainer.** Follow the target project's language and conventions. Use domain names and comments about intent, limits, and contracts. Do not imitate typos, slang, redundant comments, or vague commit titles.
 
-Isso permite uma primeira implementação simples, às vezes ainda pouco polida.
-Não exige arquitetura perfeita antecipadamente nem autoriza produzir defeitos
-intencionais. Falhas encontradas viram novos testes e correções; limitações
-conhecidas ficam explícitas. Validação de entradas externas, proteção de dados
-e controles de acesso necessários já fazem parte da primeira fatia.
+The first implementation can be direct and imperfectly polished. Never introduce defects intentionally. Turn discovered failures into tests and corrections, and state known limits. Validate external inputs, protect data, and enforce required access controls in the first applicable slice.
 
-## Nova funcionalidade e alteração existente
+## New capability or existing code
 
-| Situação | Decisão |
+| Situation | Decision |
 | --- | --- |
-| Novo app ou capacidade | Defina primeiro comportamento e teste; desenhe as peças concretas da fatia e implemente seguindo esta BASE. |
-| Novo arquivo para capacidade existente | Escolha o dono pelo domínio e pela estrutura local; arquivo novo não implica arquitetura nova. |
-| Correção ou extensão localizada | Trace chamadores e efeitos; preserve a forma do projeto e aplique a menor alteração completa. |
-| Refatoração | Garanta testes de caracterização verdes antes; preserve o comportamento e justifique a mudança de estrutura. |
-| Novo projeto minúsculo | Use apenas arquivos e ferramentas necessários ao primeiro comportamento verificável. |
-| Projeto com arquitetura estabelecida | Integre as decisões desta BASE às fronteiras existentes; não imponha pastas históricas de outro projeto. |
+| New app or capability | Define behavior and a test first; create the concrete parts needed for its first slice. |
+| New file in an existing feature | Choose its owner from the domain and local structure; a new file need not create a new architecture. |
+| Local fix or extension | Trace callers and effects; make the smallest complete change within the existing structure. |
+| Refactor | Characterize preserved behavior first; justify each structural change. |
+| Tiny new project | Use only files and tools needed for the first verifiable behavior. |
+| Established architecture | Work within its existing boundaries; do not impose another project's historical layout. |
 
-A BASE orienta a forma de nascer e crescer. A adaptação do Ponytail orienta a
-economia da mudança, sem suprimir uma funcionalidade solicitada, uma fronteira
-útil ou um teste obrigatório. O objetivo é o menor conjunto **completo** de
-mudanças, não a menor contagem de caracteres ou arquivos a qualquer custo.
+BASE guides how capabilities grow. The Ponytail adaptation guides economy of change without removing a requested feature, a useful boundary, or a required test. Minimize the **complete** change, not the character count.
 
-## Sempre TDD
+## Always TDD
 
-Para todo comportamento novo, alterado ou corrigido:
+For every new, changed, or corrected behavior:
 
-1. **Contrato:** descreva uma entrada ou situação, a ação e o resultado esperado.
-   Use a interface observável e critérios do pedido, não detalhes inventados da
-   implementação. Inclua casos de erro que pertençam ao contrato da fatia.
-2. **RED:** escreva o teste antes da implementação e execute-o. Confirme a falha
-   esperada e seu motivo. Comportamento ausente é RED; erro de ambiente,
-   dependência indisponível ou teste que não foi descoberto não comprova RED.
-3. **GREEN:** implemente só o necessário para cumprir o contrato. Execute o mesmo
-   teste e a regressão afetada. Um caso artificialmente codificado para satisfazer
-   uma única amostra não implementa o contrato.
-4. **REFACTOR:** melhore apenas o que já tem justificativa, com os testes verdes.
-   Preserve as fronteiras do domínio e a legibilidade da sequência de operações.
+1. **Contract:** describe a situation, action, and observable result. Include error cases belonging to this slice. Do not encode an invented internal design in the test.
+2. **RED:** write and run the test before functional implementation. Confirm that it fails for the expected missing behavior. A broken environment, unavailable dependency, or undiscovered test is not RED.
+3. **GREEN:** implement the contract, not merely one sample. Run that test and affected regression checks.
+4. **REFACTOR:** improve only what has a concrete reason while keeping tests green and the domain flow readable.
 
-Não implemente a funcionalidade para depois escrever o teste. Não enfraqueça
-asserções, marque testes como ignorados ou mude o resultado esperado apenas
-para obter GREEN. Se o requisito mudou, registre a mudança do contrato.
+Never implement behavior before its test. Do not weaken assertions, skip tests, or change expectations solely to obtain GREEN. Record genuine contract changes.
 
-**Bootstrap:** é permitido criar primeiro o mínimo necessário para rodar testes
-(manifesto de dependências, runner, diretório, assinatura/stub sem lógica). Crie
-o arquivo de teste antes do source funcional. Se um import ausente impede a
-asserção, use o stub mínimo para chegar à falha comportamental. Não implemente
-regra de negócio nessa preparação. Evite levantar um app inteiro para testar
-uma regra que cabe em uma função.
+**Bootstrap:** create the minimum test runner, manifest, directory, or signature needed to run the test. Create the test file before functional source. If an absent import prevents an assertion, add only a logic-free stub to reach a behavioral failure. Do not launch a full app to test a small rule.
 
-**Legado:** caracterize primeiro o comportamento que precisa permanecer. Para
-o defeito, acrescente uma regressão que falha antes da correção. Para refatoração
-sem mudança de comportamento, testes de caracterização podem começar verdes;
-não invente um defeito só para obter RED.
+**Legacy code:** characterize behavior that must remain. Add a failing regression before fixing a defect. A behavior-preserving refactor may start with green characterization tests; do not invent a defect to manufacture RED.
 
-**Estrutura, build e configuração:** quando alterarem comportamento executável,
-use um teste de contrato, integração ou smoke test antes da mudança. Para uma
-mudança puramente documental, valide referências e consistência; não fabrique
-um teste que apenas compara a redação do texto.
+**Structure, build, and configuration:** when a change alters executable behavior, write the relevant contract, integration, or smoke check first. For documentation-only changes, inspect references and consistency rather than inventing a text-matching test.
 
-**Ambiente bloqueado:** registre comando, impedimento e o que falta. Pode
-continuar inspeção, testes e preparação independente; não declare RED/GREEN nem
-avance para implementar o comportamento dependente sem poder observar o ciclo.
+**Blocked environment:** record the command and obstacle. Continue independent inspection and preparation, but do not claim RED or GREEN or implement behavior whose cycle cannot be observed.
 
-## Passagem entre etapas
+## Handoff between stages
 
-Use o registro de tarefa existente. Se não houver e for necessário retomar em
-outra sessão, crie um único `TOMI-TASK.md` na raiz; não sobrescreva outras tarefas.
-No fluxo contínuo curto, o registro pode ser a mensagem de passagem. Leve adiante:
+Use an existing task record. If work must resume in another session and none exists, create one `TOMI-TASK.md` at the root without overwriting another task. A short continuous task may use a handoff message. Carry forward:
 
 ```text
-Objetivo e contrato observável:
-Fatia atual e responsabilidades dos módulos:
-Arquivos de teste e implementação envolvidos:
-Ferramentas escolhidas e evidências da escolha:
-Comandos (diretório, ambiente, teste, regressão, build, smoke):
-RED: comando, teste, falha observada, estado do código:
-GREEN: comando, resultado, estado do código, ou ainda não executado:
-Limites deliberados, riscos e bloqueios:
-Próxima etapa e pendências:
+Objective and observable contract:
+Current slice and module responsibilities:
+Affected test and implementation files:
+Selected tools and evidence for the choice:
+Commands (directory, environment, test, regression, build, smoke):
+RED: command, test, observed failure, code state:
+GREEN: command, observed result, code state, or not yet run:
+Deliberate limits, risks, and blockers:
+Next stage and outstanding work:
 ```
 
-Comandos são concretos e verificados no projeto; campos inaplicáveis recebem
-uma justificativa curta. Registre resultados reais, não resultados pretendidos.
-Use commit se já existir ou uma descrição dos arquivos/diff; não crie commits
-automaticamente. Mudanças posteriores invalidam a evidência afetada.
+Commands must be real and verified for the project. Explain inapplicable fields briefly. Record observed results, not predictions. Refer to an existing commit or describe files and diffs; do not create commits automatically. Later changes invalidate affected evidence.
 
-- **prepare → develop:** estrutura mínima e testes RED comprovados, comandos e
-  contratos definidos. RED é uma entrega esperada de preparação, não app pronto.
-- **develop → construct:** fatia implementada e testes afetados GREEN; indicar
-  limites e revisões pendentes. Não prometer que o projeto está seguro ou pronto
-  para distribuição antes da verificação.
-- **construct → conclusão:** revisão contra a BASE, regressão, build ou equivalente
-  e smoke test do artefato; apontar exatamente o que passou, falhou ou foi bloqueado.
+- **prepare → develop:** minimal structure, demonstrated RED, defined commands and contracts. RED is an expected preparation result.
+- **develop → construct:** implemented slice with affected tests GREEN; state limits and pending review. Do not claim the project is distribution-ready before verification.
+- **construct → completion:** review against BASE, regression, build or equivalent, and artifact smoke check; report what passed, failed, or was blocked.
 
-Se uma etapa for invocada sozinha, reconstitua os pré-requisitos e execute o que
-estiver faltando dentro do escopo autorizado. Não exija que o usuário invoque
-outra skill apenas para cumprir uma dependência. Em um pedido pelo ciclo inteiro,
-avance automaticamente entre as etapas, preservando seus critérios de saída.
+If invoked alone, a stage reconstructs missing prerequisites within the authorized scope. Do not require the user to invoke another skill. For a request covering the whole cycle, continue between stages automatically.
 
-## Limites operacionais
+## Operational boundaries
 
-Leia instruções locais e contexto arquitetural antes de editar; confronte-os com
-os arquivos reais. Preserve alterações do usuário. A BASE não autoriza publicar,
-executar migrações destrutivas, instalar ferramentas globalmente ou alterar
-serviços externos. Build local não implica deploy. Não execute targets de nome
-inofensivo sem ler sua receita: podem abrir serviços ou instalar pacotes.
+Read local instructions and architecture context before editing, and verify claims against real files. Preserve user changes. BASE does not authorize publishing, destructive migrations, global installation, or changes to external services. A local build does not imply deployment. Read task recipes before running them; a harmless-looking target may start a service or install packages.
 
-Segurança e integridade não são acabamento. A terceira etapa aprofunda a revisão,
-mas um problema concreto encontrado antes deve ser testado e corrigido na etapa
-atual. Melhoria estética e generalização futura podem esperar; perda de dados,
-exposição de segredos e quebra conhecida de contrato não devem ser disfarçadas
-como parte do estilo.
+Security and integrity are not postponed polish. Construct performs deeper review, but test and fix a concrete problem as soon as it is found. Cosmetic cleanup and speculative generalization may wait; known data loss, secret exposure, or contract failure may not.
 
-## Critério de aderência à BASE
+## Review for BASE alignment
 
-Na revisão, procure evidências, sem nota numérica artificial:
+Look for evidence without a numerical style score:
 
-- Cada módulo corresponde a uma responsabilidade real e pode ser compreendido
-  a partir de seus dados, operações e consumidores?
-- O caminho entre entrada, mudança de estado e saída está claro?
-- A mudança respeita os contratos existentes e alcança todos os consumidores?
-- Há teste anterior para o comportamento e evidência do ciclo executado?
-- A solução usa a estrutura existente e só adiciona abstrações justificadas?
-- As limitações estão explícitas e o próximo ajuste pode ser localizado?
+- Does each module own a real responsibility with understandable data, operations, and consumers?
+- Is the path from input through state change to output clear?
+- Does the change preserve contracts and reach affected consumers?
+- Was the relevant test written first, and is the observed cycle recorded?
+- Does the solution use existing structure and add only justified abstractions?
+- Are limits explicit, and can the next adjustment be localized?
 
-Uma divergência pede correção quando prejudica o comportamento, a modularidade,
-a segurança ou a manutenção concreta. Diferença de gosto não justifica reescrita.
+Correct a deviation when it harms behavior, modularity, security, or concrete maintenance. A difference in taste alone does not justify a rewrite.
